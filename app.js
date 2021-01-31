@@ -53,7 +53,7 @@ passport.use(new localStrategy(User.authenticate()));
 const store=new MongoStore({
     
     url:dbUrl,
-    secret: 'ss',
+    //secret: 'ss',
     touchAfter: 24 * 60 * 60
 });
 
@@ -63,13 +63,13 @@ store.on("error",function(e){
 })
 
 
-const sessionConfig={
+/*const sessionConfig={
     store,
     name: 'session',
     secret: "aa",
     resave:false,
     saveUninitialized : true
-}
+}*/
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -132,6 +132,7 @@ app.delete('/campgrounds/:id/reviews/:reviewId', catchAsync(async (req, res) => 
     res.redirect(`/campgrounds/${id}`);
 }))
 
-app.listen(2344, () => {
-    console.log('Serving on port 2344')
+const port =process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`)
 })
